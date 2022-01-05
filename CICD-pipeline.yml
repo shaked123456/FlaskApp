@@ -3,6 +3,9 @@ trigger: none
 variables:
 - group: global parameters
 
+pool:
+ vmImage: ubuntu-latest
+ 
 stages:
 - stage: Build
   displayName: Build
