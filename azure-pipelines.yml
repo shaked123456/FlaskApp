@@ -10,7 +10,7 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      vmImage: $(vmImageName)
+      vmImage: ubuntu-latest
     steps:
     - task: UsePythonVersion@0
       displayName: 'Use Python $(python.version)'
