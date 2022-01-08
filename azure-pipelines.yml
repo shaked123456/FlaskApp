@@ -10,7 +10,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      vmImage: ubuntu-latest
+      vmImage: $(vmImageName)
     steps:
     - task: UsePythonVersion@0
       displayName: 'Use Python $(pythonVersion)'
@@ -38,21 +38,21 @@ stages:
   jobs:
   - job: Deploy
     pool:
-      name: shak-agent
+      name: $(myAgentPool)
       demands:
-      - agent.name -equals windows_server
+      - agent.name -equals $(myAgent)
       
     steps:
     - task: DownloadPipelineArtifact@2
       displayName: 'Download Pipeline Artifact'
       inputs:
         artifactName: flask
-        targetPath: 'C:\agent\_work\deploy'
+        targetPath: $(agentWorkDir)\deploy
  
     - task: ExtractFiles@1
       displayName: 'Extract files '
       inputs:
-        destinationFolder: 'C:\agent\_work\deploy'
+        destinationFolder: $(agentWorkDir)\deploy
 
-    - script: 'start /min C:\agent\_work\_tool\Python\3.9\x64\python.exe app.py'
+    - script: 'start /min $(agentPython) app.py'
       displayName: 'Command Line Script'
