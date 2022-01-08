@@ -13,9 +13,9 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: UsePythonVersion@0
-      displayName: 'Use Python $(python.version)'
+      displayName: 'Use Python $(pythonVersion)'
       inputs:
-        versionSpec: '$(python.version)'
+        versionSpec: '$(pythonVersion)'
 
     - script: 'pip install -r requirements.txt'
       displayName: 'Install Dependencies'
