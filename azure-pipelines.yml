@@ -45,12 +45,12 @@ stages:
       displayName: 'Download Pipeline Artifact'
       inputs:
         artifactName: flask
-        targetPath: 'C:\agent\_work'
+        targetPath: 'C:\agent\_work\deploy'
  
     - task: ExtractFiles@1
       displayName: 'Extract files '
       inputs:
-        destinationFolder: 'C:\agent\_work'
+        destinationFolder: 'C:\agent\_work\deploy'
 
-    - script: 'C:\agent\_work\_tool\Python\3.9\x64\python.exe C:\agent\_work\app.py'
+    - script: 'C:\agent\_work\_tool\Python\3.9\x64\python.exe C:\agent\_work\deploy\app.py'
       displayName: 'Command Line Script'
