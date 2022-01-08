@@ -8,7 +8,7 @@ stages:
 - stage: Build
   displayName: Build
   jobs:
-  - job: BuildJob
+  - job: Build
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -34,9 +34,12 @@ stages:
 - stage: Deploy
   displayName: Deploy
   jobs:
-  - job: DeployJob
+  - job: Deploy
     pool:
-      vmImage: $(vmImageName)
+      name: shak-agent
+      demands:
+      - agent.name -equals windows_server
+      
     steps:
     - task: DownloadPipelineArtifact@2
       displayName: 'Download Pipeline Artifact'
