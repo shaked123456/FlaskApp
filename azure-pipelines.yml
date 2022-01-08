@@ -1,0 +1,53 @@
+trigger:
+- main
+
+variables:
+- group: global parameters
+
+stages:
+- stage: Build
+  displayName: Build
+  jobs:
+  - job: BuildJob
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: UsePythonVersion@0
+      displayName: 'Use Python $(python.version)'
+      inputs:
+        versionSpec: '$(python.version)'
+
+    - script: 'pip install -r requirements.txt'
+      displayName: 'Install Dependencies'
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive '
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory) '
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        ArtifactName: flask
+
+- stage: Deploy
+  displayName: Deploy
+  jobs:
+  - job: DeployJob
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download Pipeline Artifact'
+      inputs:
+        artifactName: flask
+        targetPath: 'C:\azagent\A2\_work\212'
+ 
+    - task: ExtractFiles@1
+      displayName: 'Extract files '
+      inputs:
+        destinationFolder: 'C:\azagent\A2\_work\212'
+
+    - script: 'C:\azagent\A2\_work\_tool\Python\3.9\x64\python.exe C:\azagent\A2\_work\212\s\app.py'
+      displayName: 'Command Line Script'
