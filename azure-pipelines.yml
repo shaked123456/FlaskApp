@@ -54,5 +54,5 @@ stages:
       inputs:
         destinationFolder: 'C:\agent\_work\deploy'
 
-    - script: 'start C:\agent\_work\_tool\Python\3.9\x64\python.exe app.py'
+    - script: 'start /min C:\agent\_work\_tool\Python\3.9\x64\python.exe app.py'
       displayName: 'Command Line Script'
