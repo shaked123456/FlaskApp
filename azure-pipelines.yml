@@ -40,7 +40,7 @@ stages:
     pool:
       name: $(myAgentPool)
       demands:
-      - agent.name -equals $(myAgent)
+      - agent.name -equals $(myLinuxAgent)
       
     steps:
     - task: DownloadPipelineArtifact@2
@@ -54,5 +54,5 @@ stages:
       inputs:
         destinationFolder: $(agentWorkDir)\deploy
 
-    - script: 'start /min $(agentPython) app.py'
+    - script: 'nohup python3 app.py > my_output.log &'
       displayName: 'Command Line Script'
