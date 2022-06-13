@@ -1,58 +1,21 @@
 trigger:
-- main
+- none
 
-variables:
-- group: global parameters
+pool:
+  name: default
+
+resources:
+  webhooks:
+    - webhook: newHarborImage
+      connection: newHarborImageSC
 
 stages:
-- stage: Build
-  displayName: Build
+
+- stage: Deploy_To_Dev
+  variables: 
+    imageSHA: ${{  parameters.newHarborImage.event_data.resource[0].digest  }}
   jobs:
-  - job: Build
-    pool:
-      vmImage: $(vmImageName)
+  - job: Deploy_To_Dev
     steps:
-    - task: UsePythonVersion@0
-      displayName: 'Use Python $(pythonVersion)'
-      inputs:
-        versionSpec: '$(pythonVersion)'
-
-    - script: 'pip install -r requirements.txt'
-      displayName: 'Install Dependencies'
-
-    - task: ArchiveFiles@2
-      displayName: 'Archive '
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory) '
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-        ArtifactName: flask
-
-- stage: Deploy
-  displayName: Deploy
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - job: Deploy
-    pool:
-      name: $(myAgentPool)
-      demands:
-      - agent.name -equals $(myLinuxAgent)
-      
-    steps:
-    - task: DownloadPipelineArtifact@2
-      displayName: 'Download Pipeline Artifact'
-      inputs:
-        artifactName: flask
-        targetPath: $(agentWorkDir)\deploy
- 
-    - task: ExtractFiles@1
-      displayName: 'Extract files '
-      inputs:
-        destinationFolder: $(agentWorkDir)\deploy
-
-    - script: 'nohup python3 app.py > my_output.log &'
-      displayName: 'Command Line Script'
+    - script: |
+        echo 'Deploy To Dev.......'
