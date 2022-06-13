@@ -12,8 +12,6 @@ resources:
 stages:
 
 - stage: Deploy_To_Dev
-  variables: 
-    imageSHA: ${{  parameters.newHarborImage.event_data.resource[0].digest  }}
   jobs:
   - job: Deploy_To_Dev
     steps:
