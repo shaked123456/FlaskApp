@@ -1,0 +1,4 @@
+image:
+  repository: harbor1.wizards.lab/shaked-project/test_repo
+  tag: latest
+  pullPolicy: IfNotPresent
