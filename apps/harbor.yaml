@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2hhcmJvcjEud2l6YXJkcy5sYWIvIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJwYXNzd29yZCI6IkhhcmJvcjEyMzQ1IiwiYXV0aCI6IllXUnRhVzQ2U0dGeVltOXlNVEl6TkRVPSJ9fX0=
+kind: Secret
+metadata:
+  creationTimestamp: "2022-06-23T07:34:11Z"
+  name: harbor
+  namespace: default
+  resourceVersion: "12654339"
+  uid: 24d7da2e-ad7d-4f86-8ac8-508330035ca8
+type: kubernetes.io/dockerconfigjson
