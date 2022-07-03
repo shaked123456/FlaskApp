@@ -13,7 +13,8 @@ stages:
 
 - stage: 
   variables:
-    imageSHA: ${{ parameters.newHarborImage.event_data.resource[0].digest }}
+    imageSHA: ${{ parameters.newHarborImage.event_data.resources[0].digest }}
+
   jobs:
   - job: Change_Image_Tag
     steps:
