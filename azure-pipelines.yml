@@ -11,9 +11,11 @@ resources:
 
 stages:
 
-- stage: Deploy_To_Dev
+- stage: 
+  variables:
+    imageSHA: ${{ parameters.newHarborImageSC.event_data.resource[0].digest }}
   jobs:
-  - job: Deploy_To_Dev
+  - job: Change_Image_Tag
     steps:
     - script: |
-        echo 'Deploy To Dev.......'
+        echo $(imageSHA)
